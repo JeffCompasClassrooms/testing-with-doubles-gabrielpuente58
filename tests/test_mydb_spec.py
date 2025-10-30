@@ -44,9 +44,9 @@ def describe_MyDB():
     def it_saveStrings_writes_via_open_and_pickle_dump(dbfile, mocker, fake_fs):
         mocker.patch.object(builtins, "open", side_effect=fake_fs.open)
         dump_mock = mocker.patch.object(pickle, "dump", autospec=True)
+        mocker.patch.object(os.path, "isfile", return_value=True)
 
         obj = mydb.MyDB(dbfile)
-        mocker.patch.object(os.path, "isfile", return_value=True)
 
         payload = ["a", "b"]
         obj.saveStrings(payload)
